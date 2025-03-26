@@ -116,36 +116,98 @@
                                                 <th>角色</th>
                                                 <th>所属项目</th>
                                                 <th>状态</th>
+                                                <th>加入时间</th>
                                                 <th>操作</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
+                                                <td>张三</td>
+                                                <td>zhangsan@example.com</td>
                                                 <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar me-2">A</div>
-                                                        <div>admin</div>
-                                                    </div>
+                                                    <span class="badge bg-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="账户创建者，拥有所有权限">
+                                                        Owner
+                                                    </span>
                                                 </td>
-                                                <td>admin@example.com</td>
-                                                <td>管理员</td>
                                                 <td>
                                                     <span class="badge bg-info me-1">默认项目</span>
                                                     <span class="badge bg-info">项目一</span>
                                                 </td>
-                                                <td><span class="badge bg-success">已启用</span></td>
+                                                <td><span class="badge bg-success">活跃</span></td>
+                                                <td>2024-01-01</td>
                                                 <td>
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="编辑用户">
-                                                            <i class="fas fa-edit"></i>
-                                                        </button>
-                                                        <button class="btn btn-sm btn-outline-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="重置密码">
-                                                            <i class="fas fa-key"></i>
-                                                        </button>
-                                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="禁用用户">
-                                                            <i class="fas fa-ban"></i>
-                                                        </button>
-                                                    </div>
+                                                    <button class="btn btn-sm btn-outline-primary me-1">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>李四</td>
+                                                <td>lisi@example.com</td>
+                                                <td>
+                                                    <span class="badge bg-info" data-bs-toggle="tooltip" data-bs-placement="top" title="可以查看和编辑所有账户信息和设置，包括账单管理">
+                                                        Administrator
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-info">默认项目</span>
+                                                </td>
+                                                <td><span class="badge bg-success">活跃</span></td>
+                                                <td>2024-01-15</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary me-1">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>王五</td>
+                                                <td>wangwu@example.com</td>
+                                                <td>
+                                                    <span class="badge bg-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="可以访问和编辑服务器和网络信息，但不能查看账单信息或添加团队成员">
+                                                        Collaborator
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-info">项目一</span>
+                                                </td>
+                                                <td><span class="badge bg-success">活跃</span></td>
+                                                <td>2024-02-01</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary me-1">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>赵六</td>
+                                                <td>zhaoliu@example.com</td>
+                                                <td>
+                                                    <span class="badge bg-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="只能查看和编辑账单信息，查看和支付发票，不能查看或修改服务器和服务">
+                                                        Billing
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-info">默认项目</span>
+                                                </td>
+                                                <td><span class="badge bg-success">活跃</span></td>
+                                                <td>2024-02-15</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary me-1">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -272,9 +334,19 @@
                         <div class="mb-3">
                             <label class="form-label">角色</label>
                             <select class="form-select" name="role">
-                                <option value="user">普通用户</option>
-                                <option value="admin">管理员</option>
+                                <option value="owner">Owner</option>
+                                <option value="administrator">Administrator</option>
+                                <option value="collaborator">Collaborator</option>
+                                <option value="billing">Billing</option>
                             </select>
+                            <div class="form-text">
+                                <ul class="list-unstyled mb-0">
+                                    <li><small class="text-muted">Owner: 账户创建者，拥有所有权限</small></li>
+                                    <li><small class="text-muted">Administrator: 可以查看和编辑所有账户信息和设置，包括账单管理</small></li>
+                                    <li><small class="text-muted">Collaborator: 可以访问和编辑服务器和网络信息，但不能查看账单信息或添加团队成员</small></li>
+                                    <li><small class="text-muted">Billing: 只能查看和编辑账单信息，查看和支付发票，不能查看或修改服务器和服务</small></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">初始密码 <span class="text-danger">*</span></label>

@@ -6,345 +6,286 @@
     <title>工作台 - 英博云平台</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="app-container">
-        <!-- 左侧导航栏 -->
-        <div class="sidebar">
-            <div class="logo">
-                <img src="https://via.placeholder.com/120x40?text=英博云" alt="英博云">
-            </div>
-            <nav class="menu">
-                <div class="menu-item">
-                    <a href="/dashboard" class="active">
-                        <i class="fas fa-home"></i>
-                        工作台
-                    </a>
-                </div>
-
-                <div class="section-title">资源管理</div>
-                <div class="menu-item">
-                    <a href="/cluster">
-                        <i class="fas fa-layer-group"></i>
-                        集群
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a href="/dev-machine">
-                        <i class="fas fa-desktop"></i>
-                        开发机
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a href="/images">
-                        <i class="fas fa-image"></i>
-                        镜像管理
-                    </a>
-                </div>
-
-                <div class="section-title">系统管理</div>
-                <div class="menu-item">
-                    <a href="/access-control">
-                        <i class="fas fa-user-shield"></i>
-                        访问控制
-                    </a>
-                </div>
-                <div class="menu-item">
-                    <a href="/account-settings">
-                        <i class="fas fa-cog"></i>
-                        账号设置
-                    </a>
-                </div>
-
-                <div class="section-title">帮助</div>
-                <div class="menu-item">
-                    <a href="/help">
-                        <i class="fas fa-question-circle"></i>
-                        帮助中心
-                    </a>
-                </div>
-            </nav>
-
-            <div class="user-info">
-                <div class="avatar">YB</div>
-                <div class="username">用户名</div>
-            </div>
-        </div>
-
         <!-- 主内容区域 -->
         <div class="main-content">
-            <!-- 警告提示 -->
-            <div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
-                <i class="fas fa-exclamation-triangle me-2"></i>
-                禁止挖矿，一经发现后自动删除相关实例，自行承担法律责任。
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-
-            <!-- 项目选择和创建 -->
-            <div class="project-header mb-4">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                        <h2 class="mb-0 me-3">默认项目</h2>
-                        <div class="dropdown">
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="projectDropdown" data-bs-toggle="dropdown">
-                                切换项目
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="projectDropdown">
-                                <li><a class="dropdown-item active" href="#">默认项目</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createProjectModal">
-                                    <i class="fas fa-plus me-2"></i>创建新项目
-                                </a></li>
-                            </ul>
-                        </div>
+            <div class="container-fluid py-4">
+                <!-- 页面标题和操作区 -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2 class="mb-1">工作台</h2>
+                        <p class="text-muted">欢迎来到英博云平台</p>
                     </div>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProjectModal">
-                        <i class="fas fa-plus me-2"></i>创建项目
-                    </button>
-                </div>
-            </div>
-
-            <!-- 快速入口 -->
-            <div class="quick-actions mb-4">
-                <div class="row g-4">
-                    <div class="col-md-3">
-                        <a href="/cluster" class="quick-action-card">
-                            <div class="icon-wrapper">
-                                <i class="fas fa-layer-group"></i>
-                            </div>
-                            <div class="content">
-                                <h3>创建集群</h3>
-                                <p>快速创建和管理计算集群</p>
-                            </div>
-                            <div class="action">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="/dev-machine" class="quick-action-card">
-                            <div class="icon-wrapper">
-                                <i class="fas fa-desktop"></i>
-                            </div>
-                            <div class="content">
-                                <h3>开发机</h3>
-                                <p>创建开发环境，支持SSH访问</p>
-                            </div>
-                            <div class="action">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="/images" class="quick-action-card">
-                            <div class="icon-wrapper">
-                                <i class="fas fa-image"></i>
-                            </div>
-                            <div class="content">
-                                <h3>镜像管理</h3>
-                                <p>管理预置和自定义镜像</p>
-                            </div>
-                            <div class="action">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="/members" class="quick-action-card">
-                            <div class="icon-wrapper">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="content">
-                                <h3>成员管理</h3>
-                                <p>邀请和管理项目成员</p>
-                            </div>
-                            <div class="action">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 资源概览 -->
-            <div class="resource-overview mb-4">
-                <h3 class="section-title mb-4">资源概览</h3>
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <div class="overview-card">
-                            <div class="card-header">
-                                <h4>计算资源</h4>
-                                <a href="/cluster" class="view-more">查看详情</a>
-                            </div>
-                            <div class="card-body">
-                                <div class="resource-item">
-                                    <span class="label">运行中集群</span>
-                                    <span class="value">2 个</span>
-                                </div>
-                                <div class="resource-item">
-                                    <span class="label">运行中开发机</span>
-                                    <span class="value">3 台</span>
-                                </div>
-                                <div class="resource-item">
-                                    <span class="label">GPU使用量</span>
-                                    <span class="value">4 卡</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="overview-card">
-                            <div class="card-header">
-                                <h4>存储资源</h4>
-                                <a href="/storage" class="view-more">查看详情</a>
-                            </div>
-                            <div class="card-body">
-                                <div class="resource-item">
-                                    <span class="label">共享存储</span>
-                                    <span class="value">100 GB</span>
-                                </div>
-                                <div class="resource-item">
-                                    <span class="label">对象存储</span>
-                                    <span class="value">50 GB</span>
-                                </div>
-                                <div class="resource-item">
-                                    <span class="label">镜像仓库</span>
-                                    <span class="value">12 个</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 计费统计 -->
-            <div class="billing-overview mb-4">
-                <h3 class="section-title mb-4">计费统计</h3>
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <div class="billing-card">
-                            <div class="billing-header">
-                                <h4>本月预估</h4>
-                                <span class="trend up">
-                                    <i class="fas fa-arrow-up"></i>
-                                    12.5%
-                                </span>
-                            </div>
-                            <div class="billing-amount">¥1,280.50</div>
-                            <div class="billing-compare">较上月：¥1,138.20</div>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="billing-detail-card">
-                            <div class="card-header">
-                                <h4>费用明细</h4>
-                                <a href="/billing" class="view-more">账单管理</a>
-                            </div>
-                            <div class="card-body">
-                                <div class="billing-items">
-                                    <div class="billing-item">
-                                        <div class="item-info">
-                                            <span class="item-name">计算资源</span>
-                                            <div class="item-detail">
-                                                <span class="price">¥2.50</span>
-                                                <span class="unit">/核/天</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 65%"></div>
-                                        </div>
-                                        <div class="amount">¥750.00</div>
-                                    </div>
-                                    <div class="billing-item">
-                                        <div class="item-info">
-                                            <span class="item-name">GPU资源</span>
-                                            <div class="item-detail">
-                                                <span class="price">¥15.00</span>
-                                                <span class="unit">/卡/天</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 25%"></div>
-                                        </div>
-                                        <div class="amount">¥360.00</div>
-                                    </div>
-                                    <div class="billing-item">
-                                        <div class="item-info">
-                                            <span class="item-name">存储资源</span>
-                                            <div class="item-detail">
-                                                <span class="price">¥0.01</span>
-                                                <span class="unit">/GB/天</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 10%"></div>
-                                        </div>
-                                        <div class="amount">¥170.50</div>
-                                    </div>
-                                </div>
-                                <div class="billing-actions">
-                                    <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='/billing/detail'">
-                                        <i class="fas fa-file-invoice me-1"></i>
-                                        查看详细账单
-                                    </button>
-                                    <button class="btn btn-outline-secondary btn-sm" onclick="window.location.href='/billing/export'">
-                                        <i class="fas fa-download me-1"></i>
-                                        导出账单
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 使用指南 -->
-            <div class="usage-guide">
-                <h3 class="section-title mb-4">使用指南</h3>
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <div class="guide-card">
-                            <div class="guide-icon">
-                                <i class="fas fa-rocket"></i>
-                            </div>
-                            <div class="guide-content">
-                                <h4>快速开始</h4>
-                                <ul class="guide-list">
-                                    <li><a href="#">创建第一个集群</a></li>
-                                    <li><a href="#">配置开发环境</a></li>
-                                    <li><a href="#">邀请项目成员</a></li>
+                    <div class="d-flex gap-3">
+                        <!-- 项目选择 -->
+                        <div class="project-header">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="projectSwitcher" data-bs-toggle="dropdown" aria-expanded="false">
+                                    默认项目
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="projectSwitcher">
+                                    <li><a class="dropdown-item active" href="#" onclick="switchProject('默认项目')">默认项目</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="switchProject('清华大学')">清华大学</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="switchProject('北京大学实验项目')">北京大学实验项目</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#createProjectModal">
+                                        <i class="fas fa-plus me-2"></i>创建新项目
+                                    </a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="guide-card">
-                            <div class="guide-icon">
-                                <i class="fas fa-book"></i>
+                </div>
+
+                <!-- 警告提示 -->
+                <div class="alert alert-warning mb-4" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    禁止挖矿，一经发现后自动删除相关实例，自行承担法律责任。
+                </div>
+
+                <!-- 快速入口 -->
+                <div class="quick-actions mb-4">
+                    <div class="row g-4">
+                        <div class="col-md-3">
+                            <a href="/cluster" class="quick-action-card">
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-layer-group"></i>
+                                </div>
+                                <div class="content">
+                                    <h3>创建集群</h3>
+                                    <p>快速创建和管理计算集群</p>
+                                </div>
+                                <div class="action">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/dev-machine" class="quick-action-card">
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-desktop"></i>
+                                </div>
+                                <div class="content">
+                                    <h3>开发机</h3>
+                                    <p>创建开发环境，支持SSH访问</p>
+                                </div>
+                                <div class="action">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/images" class="quick-action-card">
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                <div class="content">
+                                    <h3>镜像管理</h3>
+                                    <p>管理预置和自定义镜像</p>
+                                </div>
+                                <div class="action">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/members" class="quick-action-card">
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="content">
+                                    <h3>成员管理</h3>
+                                    <p>邀请和管理项目成员</p>
+                                </div>
+                                <div class="action">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 资源概览 -->
+                <div class="resource-overview mb-4">
+                    <h3 class="section-title mb-4">资源概览</h3>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="overview-card">
+                                <div class="card-header">
+                                    <h4>计算资源</h4>
+                                    <a href="/cluster" class="view-more">查看详情</a>
+                                </div>
+                                <div class="card-body">
+                                    <div class="resource-item">
+                                        <span class="label">运行中集群</span>
+                                        <span class="value">2 个</span>
+                                    </div>
+                                    <div class="resource-item">
+                                        <span class="label">运行中开发机</span>
+                                        <span class="value">3 台</span>
+                                    </div>
+                                    <div class="resource-item">
+                                        <span class="label">GPU使用量</span>
+                                        <span class="value">4 卡</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="guide-content">
-                                <h4>最佳实践</h4>
-                                <ul class="guide-list">
-                                    <li><a href="#">GPU资源使用指南</a></li>
-                                    <li><a href="#">存储服务使用说明</a></li>
-                                    <li><a href="#">成本优化建议</a></li>
-                                </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="overview-card">
+                                <div class="card-header">
+                                    <h4>存储资源</h4>
+                                    <a href="/storage" class="view-more">查看详情</a>
+                                </div>
+                                <div class="card-body">
+                                    <div class="resource-item">
+                                        <span class="label">共享存储</span>
+                                        <span class="value">100 GB</span>
+                                    </div>
+                                    <div class="resource-item">
+                                        <span class="label">对象存储</span>
+                                        <span class="value">50 GB</span>
+                                    </div>
+                                    <div class="resource-item">
+                                        <span class="label">镜像仓库</span>
+                                        <span class="value">12 个</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="guide-card">
-                            <div class="guide-icon">
-                                <i class="fas fa-question-circle"></i>
+                </div>
+
+                <!-- 计费统计 -->
+                <div class="billing-overview mb-4">
+                    <h3 class="section-title mb-4">计费统计</h3>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="billing-card">
+                                <div class="billing-header">
+                                    <h4>本月预估</h4>
+                                    <span class="trend up">
+                                        <i class="fas fa-arrow-up"></i>
+                                        12.5%
+                                    </span>
+                                </div>
+                                <div class="billing-amount">¥1,280.50</div>
+                                <div class="billing-compare">较上月：¥1,138.20</div>
                             </div>
-                            <div class="guide-content">
-                                <h4>帮助支持</h4>
-                                <ul class="guide-list">
-                                    <li><a href="#">常见问题</a></li>
-                                    <li><a href="#">技术支持</a></li>
-                                    <li><a href="#">问题反馈</a></li>
-                                </ul>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="billing-detail-card">
+                                <div class="card-header">
+                                    <h4>费用明细</h4>
+                                    <a href="/billing" class="view-more">账单管理</a>
+                                </div>
+                                <div class="card-body">
+                                    <div class="billing-items">
+                                        <div class="billing-item">
+                                            <div class="item-info">
+                                                <span class="item-name">计算资源</span>
+                                                <div class="item-detail">
+                                                    <span class="price">¥2.50</span>
+                                                    <span class="unit">/核/天</span>
+                                                </div>
+                                            </div>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-primary" role="progressbar" style="width: 65%"></div>
+                                            </div>
+                                            <div class="amount">¥750.00</div>
+                                        </div>
+                                        <div class="billing-item">
+                                            <div class="item-info">
+                                                <span class="item-name">GPU资源</span>
+                                                <div class="item-detail">
+                                                    <span class="price">¥15.00</span>
+                                                    <span class="unit">/卡/天</span>
+                                                </div>
+                                            </div>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%"></div>
+                                            </div>
+                                            <div class="amount">¥360.00</div>
+                                        </div>
+                                        <div class="billing-item">
+                                            <div class="item-info">
+                                                <span class="item-name">存储资源</span>
+                                                <div class="item-detail">
+                                                    <span class="price">¥0.01</span>
+                                                    <span class="unit">/GB/天</span>
+                                                </div>
+                                            </div>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-info" role="progressbar" style="width: 10%"></div>
+                                            </div>
+                                            <div class="amount">¥170.50</div>
+                                        </div>
+                                    </div>
+                                    <div class="billing-actions">
+                                        <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='/billing/detail'">
+                                            <i class="fas fa-file-invoice me-1"></i>
+                                            查看详细账单
+                                        </button>
+                                        <button class="btn btn-outline-secondary btn-sm" onclick="window.location.href='/billing/export'">
+                                            <i class="fas fa-download me-1"></i>
+                                            导出账单
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 使用指南 -->
+                <div class="usage-guide">
+                    <h3 class="section-title mb-4">使用指南</h3>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="guide-card">
+                                <div class="guide-icon">
+                                    <i class="fas fa-rocket"></i>
+                                </div>
+                                <div class="guide-content">
+                                    <h4>快速开始</h4>
+                                    <ul class="guide-list">
+                                        <li><a href="#">创建第一个集群</a></li>
+                                        <li><a href="#">配置开发环境</a></li>
+                                        <li><a href="#">邀请项目成员</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="guide-card">
+                                <div class="guide-icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <div class="guide-content">
+                                    <h4>最佳实践</h4>
+                                    <ul class="guide-list">
+                                        <li><a href="#">GPU资源使用指南</a></li>
+                                        <li><a href="#">存储服务使用说明</a></li>
+                                        <li><a href="#">成本优化建议</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="guide-card">
+                                <div class="guide-icon">
+                                    <i class="fas fa-question-circle"></i>
+                                </div>
+                                <div class="guide-content">
+                                    <h4>帮助支持</h4>
+                                    <ul class="guide-list">
+                                        <li><a href="#">常见问题</a></li>
+                                        <li><a href="#">技术支持</a></li>
+                                        <li><a href="#">问题反馈</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -363,27 +304,27 @@
                     <div class="modal-body">
                         <form id="createProjectForm">
                             <div class="mb-3">
-                                <label class="form-label">项目名称</label>
-                                <input type="text" class="form-control" required>
+                                <label class="form-label">项目名称 <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="name" required>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">项目描述</label>
-                                <textarea class="form-control" rows="3"></textarea>
+                                <label class="form-label">项目描述 <span class="text-danger">*</span></label>
+                                <textarea class="form-control" name="description" rows="3" required></textarea>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">资源配额</label>
                                 <div class="row g-3">
                                     <div class="col-md-4">
-                                        <label class="form-label small">CPU (核)</label>
-                                        <input type="number" class="form-control" value="4">
+                                        <label class="form-label">CPU (核)</label>
+                                        <input type="number" class="form-control" name="cpu" min="1" value="4">
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="form-label small">内存 (GB)</label>
-                                        <input type="number" class="form-control" value="8">
+                                        <label class="form-label">内存 (GB)</label>
+                                        <input type="number" class="form-control" name="memory" min="1" value="8">
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="form-label small">存储 (GB)</label>
-                                        <input type="number" class="form-control" value="100">
+                                        <label class="form-label">存储 (GB)</label>
+                                        <input type="number" class="form-control" name="storage" min="1" value="100">
                                     </div>
                                 </div>
                             </div>
@@ -391,7 +332,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary" id="createProjectBtn">创建</button>
+                        <button type="button" class="btn btn-primary" onclick="createProject()">创建</button>
                     </div>
                 </div>
             </div>

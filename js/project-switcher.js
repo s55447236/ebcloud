@@ -1,4 +1,4 @@
-// 初始化页面
+// 初始化项目选择器
 document.addEventListener('DOMContentLoaded', function() {
     // 设置默认项目
     const currentProject = localStorage.getItem('currentProject') || '默认项目';
@@ -36,33 +36,41 @@ function switchProject(projectName) {
     document.dispatchEvent(event);
     
     // 刷新页面数据
-    refreshDashboardData(projectName);
+    refreshPageData(projectName);
 }
 
 // 更新项目显示
 function updateProjectDisplay(projectName) {
-    // 更新标题
-    const projectTitle = document.querySelector('h2.mb-0');
-    if (projectTitle) {
-        projectTitle.textContent = projectName;
-    }
-    
-    // 更新按钮文本
+    // 更新下拉按钮文本
     const switcherButton = document.getElementById('projectSwitcher');
     if (switcherButton) {
-        switcherButton.textContent = '切换项目';
+        switcherButton.textContent = projectName;
     }
 }
 
-// 刷新仪表板数据
-function refreshDashboardData(projectName) {
-    // TODO: 根据项目名称获取并更新相关数据
-    console.log('正在刷新项目数据:', projectName);
-    
-    // 这里可以添加更新资源使用情况、集群状态等逻辑
-    
+// 刷新页面数据
+function refreshPageData(projectName) {
     // 显示加载提示
     showToast('正在切换到项目: ' + projectName);
+    
+    // 根据当前页面类型刷新数据
+    const pageType = document.body.dataset.pageType;
+    switch(pageType) {
+        case 'cluster':
+            refreshClusterData(projectName);
+            break;
+        case 'storage':
+            refreshStorageData(projectName);
+            break;
+        case 'dev-machine':
+            refreshDevMachineData(projectName);
+            break;
+        case 'images':
+            refreshImageData(projectName);
+            break;
+        default:
+            console.log('刷新项目数据:', projectName);
+    }
 }
 
 // 显示提示消息

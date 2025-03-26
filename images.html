@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
 </head>
-<body>
+<body data-page-type="images">
     <div class="app-container">
         <!-- 侧边栏容器 -->
         <div id="sidebar-container"></div>
@@ -23,13 +23,22 @@
                         <p class="text-muted">管理您的容器镜像，包括预制镜像和自定义镜像</p>
                     </div>
                     <div class="d-flex gap-3">
-                        <!-- 项目选择器 -->
-                        <div class="project-selector">
-                            <select class="form-select" id="projectSelector">
-                                <option value="all">所有项目</option>
-                                <option value="project1">项目一</option>
-                                <option value="project2">项目二</option>
-                            </select>
+                        <!-- 项目选择 -->
+                        <div class="project-header">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="projectSwitcher" data-bs-toggle="dropdown" aria-expanded="false">
+                                    默认项目
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="projectSwitcher">
+                                    <li><a class="dropdown-item active" href="#" onclick="switchProject('默认项目')">默认项目</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="switchProject('清华大学')">清华大学</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="switchProject('北京大学实验项目')">北京大学实验项目</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#createProjectModal">
+                                        <i class="fas fa-plus me-2"></i>创建新项目
+                                    </a></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="search-box">
                             <div class="input-group">
@@ -39,6 +48,9 @@
                                 </button>
                             </div>
                         </div>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createImageModal">
+                            <i class="fas fa-plus me-2"></i>创建镜像
+                        </button>
                     </div>
                 </div>
 
@@ -385,6 +397,7 @@ CMD ["python3", "app.py"]"></textarea>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/project-switcher.js"></script>
     <script src="js/images.js"></script>
 </body>
 </html> 

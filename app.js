@@ -188,6 +188,9 @@ async function loadPageScript(path) {
         case '/file-storage':
             scriptPath = 'js/file-storage.js';
             break;
+        case '/billing-overview':
+            scriptPath = 'js/billing-overview.js';
+            break;
         // 可以添加更多页面的脚本
     }
 

@@ -82,37 +82,68 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('管理成员:', projectName);
         });
     });
+
+    // 初始化访问控制页面
+    initializeAccessControl();
 });
 
 // 初始化项目选择器
 function initProjectSelector() {
-    const projectSelector = document.getElementById('projectSelector');
-    if (!projectSelector) return;
+    const projectSelectors = document.querySelectorAll('.form-select');
+    if (!projectSelectors.length) return;
     
-    projectSelector.addEventListener('change', function() {
-        const selectedProject = this.value;
-        filterUsersByProject(selectedProject);
+    projectSelectors.forEach(selector => {
+        // 设置默认选项
+        selector.value = 'default';
+        
+        selector.addEventListener('change', function() {
+            const selectedValue = this.value;
+            
+            // 如果选择了创建新项目
+            if (selectedValue === 'create') {
+                // 重置选择器到默认值
+                this.value = 'default';
+                // 显示创建项目模态框
+                const modal = new bootstrap.Modal(document.getElementById('createProjectModal'));
+                modal.show();
+                return;
+            }
+            
+            // 处理项目切换
+            switchToProject(this.options[this.selectedIndex].text);
+        });
     });
 }
 
-// 根据项目筛选用户列表
-function filterUsersByProject(projectId) {
-    const rows = document.querySelectorAll('tbody tr');
+// 切换项目
+function switchToProject(projectName) {
+    // 保存当前项目到本地存储
+    localStorage.setItem('currentProject', projectName);
     
-    rows.forEach(row => {
-        if (projectId === 'all') {
-            row.style.display = '';
-            return;
+    // 更新所有项目选择器的值
+    document.querySelectorAll('.form-select').forEach(selector => {
+        const option = Array.from(selector.options).find(opt => opt.text === projectName);
+        if (option) {
+            selector.value = option.value;
         }
-        
-        const projectTags = row.querySelector('.project-tags');
-        if (!projectTags) return;
-        
-        const hasProject = Array.from(projectTags.querySelectorAll('.badge'))
-            .some(badge => badge.textContent.includes(projectId));
-        
-        row.style.display = hasProject ? '' : 'none';
     });
+    
+    // 触发项目切换事件
+    const event = new CustomEvent('projectChange', {
+        detail: { projectName }
+    });
+    document.dispatchEvent(event);
+    
+    // 刷新项目相关数据
+    refreshProjectData(projectName);
+}
+
+// 刷新项目相关数据
+function refreshProjectData(projectName) {
+    // TODO: 根据选中的项目刷新页面上的相关数据
+    console.log('刷新项目数据:', projectName);
+    
+    // 这里可以添加更新用户列表、资源使用情况等逻辑
 }
 
 // 初始化搜索功能
@@ -299,11 +330,21 @@ function debounce(func, wait) {
     };
 }
 
-// 项目管理相关函数
+// 创建项目
 function createProject() {
     const form = document.getElementById('createProjectForm');
     const formData = new FormData(form);
-    const projectData = Object.fromEntries(formData.entries());
+    
+    // 构建项目数据
+    const projectData = {
+        name: formData.get('name'),
+        description: formData.get('description'),
+        quota: {
+            cpu: parseInt(formData.get('cpu')) || 4,
+            memory: parseInt(formData.get('memory')) || 8,
+            storage: parseInt(formData.get('storage')) || 100
+        }
+    };
 
     if (!validateProjectForm(projectData)) {
         return;
@@ -317,38 +358,62 @@ function createProject() {
     modal.hide();
     
     // 显示成功提示
-    showToast('项目创建成功');
+    showToast('项目创建成功', 'success');
     
-    // 重置表单
-    form.reset();
-    
-    // 刷新项目列表
-    refreshProjectList();
+    // 刷新页面
+    setTimeout(() => {
+        location.reload();
+    }, 1000);
 }
 
+// 编辑项目
 function editProject(projectName) {
-    // 获取项目信息
+    // 获取项目信息（这里模拟从服务器获取数据）
     const projectInfo = {
         id: '1',
         name: projectName,
-        description: '系统默认项目'
+        description: '系统默认项目',
+        quota: {
+            cpu: 4,
+            memory: 8,
+            storage: 100
+        },
+        status: 'active'
     };
 
     // 填充表单
     const form = document.getElementById('editProjectForm');
-    form.querySelector('[name="projectId"]').value = projectInfo.id;
-    form.querySelector('[name="name"]').value = projectInfo.name;
-    form.querySelector('[name="description"]').value = projectInfo.description;
-
-    // 显示模态框
-    const modal = new bootstrap.Modal(document.getElementById('editProjectModal'));
-    modal.show();
+    if (form) {
+        // 基本信息
+        form.querySelector('[name="projectId"]').value = projectInfo.id;
+        form.querySelector('[name="name"]').value = projectInfo.name;
+        form.querySelector('[name="description"]').value = projectInfo.description;
+        
+        // 资源配额
+        form.querySelector('[name="cpu"]').value = projectInfo.quota.cpu;
+        form.querySelector('[name="memory"]').value = projectInfo.quota.memory;
+        form.querySelector('[name="storage"]').value = projectInfo.quota.storage;
+    }
 }
 
+// 更新项目信息
 function updateProject() {
     const form = document.getElementById('editProjectForm');
+    if (!form) return;
+
     const formData = new FormData(form);
-    const projectData = Object.fromEntries(formData.entries());
+    
+    // 构建项目数据
+    const projectData = {
+        id: formData.get('projectId'),
+        name: formData.get('name'),
+        description: formData.get('description'),
+        quota: {
+            cpu: parseInt(formData.get('cpu')) || 4,
+            memory: parseInt(formData.get('memory')) || 8,
+            storage: parseInt(formData.get('storage')) || 100
+        }
+    };
 
     if (!validateProjectForm(projectData)) {
         return;
@@ -359,13 +424,17 @@ function updateProject() {
     
     // 关闭模态框
     const modal = bootstrap.Modal.getInstance(document.getElementById('editProjectModal'));
-    modal.hide();
+    if (modal) {
+        modal.hide();
+    }
     
     // 显示成功提示
-    showToast('项目更新成功');
+    showToast('项目更新成功', 'success');
     
-    // 刷新项目列表
-    refreshProjectList();
+    // 刷新页面
+    setTimeout(() => {
+        location.reload();
+    }, 1000);
 }
 
 function manageMembers(projectName) {
@@ -405,20 +474,6 @@ function manageMembers(projectName) {
     modal.show();
 }
 
-function switchToProject(projectName) {
-    // 保存当前项目到本地存储
-    localStorage.setItem('currentProject', projectName);
-    
-    // 触发项目切换事件
-    const event = new CustomEvent('projectChange', {
-        detail: { projectName }
-    });
-    document.dispatchEvent(event);
-    
-    // 跳转到控制台
-    window.location.href = '/dashboard';
-}
-
 // 用户管理相关函数
 function createUser() {
     const form = document.getElementById('createUserForm');
@@ -448,8 +503,24 @@ function createUser() {
 
 // 表单验证函数
 function validateProjectForm(data) {
-    if (!data.name) {
+    if (!data.name || data.name.trim() === '') {
         showToast('请输入项目名称', 'error');
+        return false;
+    }
+    if (!data.description || data.description.trim() === '') {
+        showToast('请输入项目描述', 'error');
+        return false;
+    }
+    if (data.quota.cpu < 1) {
+        showToast('CPU配额必须大于0', 'error');
+        return false;
+    }
+    if (data.quota.memory < 1) {
+        showToast('内存配额必须大于0', 'error');
+        return false;
+    }
+    if (data.quota.storage < 1) {
+        showToast('存储配额必须大于0', 'error');
         return false;
     }
     return true;
@@ -519,4 +590,137 @@ function refreshProjectList() {
 function refreshUserList() {
     // TODO: 从后端获取最新的用户列表
     console.log('刷新用户列表');
+}
+
+// 初始化访问控制页面
+function initializeAccessControl() {
+    // 初始化所有 tooltip
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    // 绑定事件监听器
+    bindEventListeners();
+}
+
+// 绑定事件监听器
+function bindEventListeners() {
+    // 编辑用户按钮事件
+    const editButtons = document.querySelectorAll('#users .btn-outline-primary');
+    editButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const row = this.closest('tr');
+            const userData = {
+                username: row.cells[0].textContent.trim(),
+                email: row.cells[1].textContent.trim(),
+                role: row.cells[2].querySelector('.badge').textContent.trim(),
+                projects: Array.from(row.cells[3].querySelectorAll('.badge')).map(badge => badge.textContent.trim()),
+                status: row.cells[4].querySelector('.badge').textContent.trim()
+            };
+            
+            // 填充编辑表单
+            const form = document.getElementById('editUserForm');
+            if (form) {
+                form.querySelector('[name="username"]').value = userData.username;
+                form.querySelector('[name="email"]').value = userData.email;
+                form.querySelector('[name="role"]').value = userData.role.toLowerCase();
+                
+                // 设置项目复选框
+                const defaultProjectCheckbox = form.querySelector('#defaultProject');
+                const project1Checkbox = form.querySelector('#project1');
+                if (defaultProjectCheckbox && project1Checkbox) {
+                    defaultProjectCheckbox.checked = userData.projects.includes('默认项目');
+                    project1Checkbox.checked = userData.projects.includes('项目一');
+                }
+                
+                // 设置状态
+                const statusSelect = form.querySelector('[name="status"]');
+                if (statusSelect) {
+                    statusSelect.value = userData.status === '活跃' ? 'active' : 'inactive';
+                }
+            }
+        });
+    });
+
+    // 删除用户按钮事件
+    const deleteButtons = document.querySelectorAll('#users .btn-outline-danger');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const row = this.closest('tr');
+            const username = row.cells[0].textContent.trim();
+            if (confirm(`确定要删除用户 ${username} 吗？`)) {
+                // 执行删除操作
+                deleteUser(username);
+            }
+        });
+    });
+
+    // 更新用户按钮事件
+    const updateUserBtn = document.querySelector('#editUserModal .btn-primary');
+    if (updateUserBtn) {
+        updateUserBtn.addEventListener('click', function() {
+            updateUser();
+        });
+    }
+}
+
+// 更新用户信息
+function updateUser() {
+    const form = document.getElementById('editUserForm');
+    if (!form) return;
+
+    const formData = new FormData(form);
+    
+    // 获取选中的项目
+    const selectedProjects = [];
+    const defaultProjectCheckbox = form.querySelector('#defaultProject');
+    const project1Checkbox = form.querySelector('#project1');
+    
+    if (defaultProjectCheckbox && defaultProjectCheckbox.checked) {
+        selectedProjects.push('默认项目');
+    }
+    if (project1Checkbox && project1Checkbox.checked) {
+        selectedProjects.push('项目一');
+    }
+    
+    // 构建用户数据
+    const userData = {
+        username: formData.get('username'),
+        email: formData.get('email'),
+        role: formData.get('role'),
+        projects: selectedProjects,
+        status: formData.get('status')
+    };
+    
+    // TODO: 发送更新请求到服务器
+    console.log('更新用户信息:', userData);
+    
+    // 关闭模态框
+    const modal = bootstrap.Modal.getInstance(document.getElementById('editUserModal'));
+    if (modal) {
+        modal.hide();
+    }
+    
+    // 显示成功提示
+    showToast('用户信息更新成功', 'success');
+    
+    // 刷新页面
+    setTimeout(() => {
+        location.reload();
+    }, 1000);
+}
+
+// 删除用户
+function deleteUser(username) {
+    // TODO: 发送删除请求到服务器
+    console.log('删除用户:', username);
+    
+    // 显示成功提示
+    showToast('用户删除成功', 'success');
+    
+    // 刷新页面
+    setTimeout(() => {
+        location.reload();
+    }, 1000);
 } 
