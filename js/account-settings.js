@@ -1,12 +1,12 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // 个人信息表单提交
     const profileForm = document.getElementById('profileForm');
-    profileForm.addEventListener('submit', function(e) {
+    profileForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        
+
         const formData = new FormData(profileForm);
         const data = Object.fromEntries(formData.entries());
-        
+
         // 模拟API调用
         console.log('更新个人信息:', data);
         showToast('个人信息更新成功');
@@ -16,20 +16,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const changePasswordForm = document.getElementById('changePasswordForm');
     const changePasswordBtn = document.getElementById('changePasswordBtn');
 
-    changePasswordBtn.addEventListener('click', function() {
+    changePasswordBtn.addEventListener('click', function () {
         if (!validatePasswordForm()) return;
-        
+
         const formData = new FormData(changePasswordForm);
         const data = Object.fromEntries(formData.entries());
-        
+
         // 模拟API调用
         console.log('修改密码:', data);
         showToast('密码修改成功');
-        
+
         // 关闭模态框
         const modal = bootstrap.Modal.getInstance(document.getElementById('changePasswordModal'));
         modal.hide();
-        
+
         // 重置表单
         changePasswordForm.reset();
     });
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 两步验证开关
     const twoFactorAuth = document.getElementById('twoFactorAuth');
-    twoFactorAuth.addEventListener('change', function() {
+    twoFactorAuth.addEventListener('change', function () {
         const status = this.checked ? '启用' : '禁用';
         console.log('两步验证:', status);
         showToast(`两步验证已${status}`);
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 退出设备
     document.querySelectorAll('.device-list .btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const deviceName = this.closest('.device-item').querySelector('div > div').textContent;
             if (confirm(`确定要退出 ${deviceName} 的登录吗？`)) {
                 console.log('退出设备:', deviceName);
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 通知设置
     document.querySelectorAll('.notification-settings input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
+        checkbox.addEventListener('change', function () {
             const type = this.id.replace('Notification', '');
             const status = this.checked ? '开启' : '关闭';
             console.log('通知设置:', type, status);
@@ -106,11 +106,11 @@ document.addEventListener('DOMContentLoaded', function() {
     avatarInput.style.display = 'none';
     document.body.appendChild(avatarInput);
 
-    avatarUploadBtn.addEventListener('click', function() {
+    avatarUploadBtn.addEventListener('click', function () {
         avatarInput.click();
     });
 
-    avatarInput.addEventListener('change', function(e) {
+    avatarInput.addEventListener('change', function (e) {
         const file = e.target.files[0];
         if (!file) return;
 
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         bsToast.show();
 
-        toast.addEventListener('hidden.bs.toast', function() {
+        toast.addEventListener('hidden.bs.toast', function () {
             toastContainer.remove();
         });
     }

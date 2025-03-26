@@ -1,0 +1,11 @@
+{
+  "name": "yingbo-cloud-platform",
+  "version": "1.0.0",
+  "description": "Yingbo Cloud Platform UI",
+  "scripts": {
+    "start": "browser-sync start --server --files '**/*.html, **/*.css, **/*.js' --port 5500"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.29.3"
+  }
+} 

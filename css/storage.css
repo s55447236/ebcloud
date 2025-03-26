@@ -24,12 +24,12 @@
 .card {
     border: none;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
 }
 
 .card:hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-body {
@@ -177,7 +177,7 @@
 
 .form-control:focus {
     border-color: #228be6;
-    box-shadow: 0 0 0 2px rgba(34,139,230,0.1);
+    box-shadow: 0 0 0 2px rgba(34, 139, 230, 0.1);
 }
 
 /* 存储用量显示 */
@@ -200,7 +200,7 @@
 /* Toast 样式 */
 .toast {
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .toast-body {
@@ -213,25 +213,25 @@
     .card {
         margin-bottom: 15px;
     }
-    
+
     .nav-tabs {
         flex-wrap: nowrap;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
-    
+
     .nav-tabs .nav-link {
         white-space: nowrap;
     }
-    
+
     .table-responsive {
         margin: 0 -15px;
     }
-    
+
     .btn-group {
         flex-wrap: wrap;
     }
-    
+
     .btn-group .btn {
         margin: 2px;
     }
@@ -447,12 +447,12 @@
         transform: translateX(-100%);
         transition: transform 0.3s ease-in-out;
     }
-    
+
     .sidebar.show {
         transform: translateX(0);
     }
-    
+
     .main-content {
         margin-left: 0;
     }
-} 
+}

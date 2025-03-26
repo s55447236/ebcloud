@@ -8,9 +8,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="css/billing.css" rel="stylesheet">
 </head>
-<body>
+<body data-page-type="billing">
     <div class="app-container">
-        <!-- 主要内容区 -->
         <div class="main-content">
             <div class="container-fluid py-4">
                 <!-- 页面标题和操作区 -->
@@ -21,112 +20,160 @@
                     </div>
                     <div class="d-flex gap-3">
                         <!-- 时间范围选择器 -->
-                        <select class="form-select" id="timeRange">
-                            <option value="month">按月查看</option>
-                            <option value="custom">自定义时间段</option>
-                        </select>
+                        <div class="input-group" style="width: 300px;">
+                            <input type="text" class="form-control" id="dateRange" placeholder="选择时间范围">
+                            <button class="btn btn-outline-secondary" type="button">
+                                <i class="fas fa-calendar"></i>
+                            </button>
+                        </div>
                         <!-- 导出按钮 -->
-                        <button class="btn btn-outline-primary">
+                        <button class="btn btn-outline-primary" id="exportBill">
                             <i class="fas fa-download me-2"></i>导出账单
                         </button>
                     </div>
                 </div>
 
-                <!-- 账单概览和详情切换 -->
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <ul class="nav nav-tabs" id="billingTabs" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab">
-                                    <i class="fas fa-chart-pie me-2"></i>账单概览
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab">
-                                    <i class="fas fa-list me-2"></i>账单详情
-                                </button>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content mt-4" id="billingTabsContent">
-                            <!-- 账单概览 -->
-                            <div class="tab-pane fade show active" id="overview" role="tabpanel">
-                                <div class="row">
-                                    <!-- 月度账单卡片 -->
-                                    <div class="col-md-4 mb-4">
-                                        <div class="card h-100">
-                                            <div class="card-body">
-                                                <h6 class="card-subtitle mb-2 text-muted">2024年3月</h6>
-                                                <h3 class="card-title mb-2">¥4,350.00</h3>
-                                                <p class="card-text text-muted mb-3">较上月增长 12.5%</p>
-                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="showMonthDetails('2024-03')">
-                                                    查看详情
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 mb-4">
-                                        <div class="card h-100">
-                                            <div class="card-body">
-                                                <h6 class="card-subtitle mb-2 text-muted">2024年2月</h6>
-                                                <h3 class="card-title mb-2">¥3,865.00</h3>
-                                                <p class="card-text text-muted mb-3">较上月增长 8.2%</p>
-                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="showMonthDetails('2024-02')">
-                                                    查看详情
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 mb-4">
-                                        <div class="card h-100">
-                                            <div class="card-body">
-                                                <h6 class="card-subtitle mb-2 text-muted">2024年1月</h6>
-                                                <h3 class="card-title mb-2">¥3,572.00</h3>
-                                                <p class="card-text text-muted mb-3">较上月增长 5.7%</p>
-                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="showMonthDetails('2024-01')">
-                                                    查看详情
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+                <!-- 账单概览卡片 -->
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="card-subtitle text-muted">本月账单金额</h6>
+                                    <i class="fas fa-info-circle text-muted" data-bs-toggle="tooltip" title="当月实际消费金额"></i>
                                 </div>
-                            </div>
-
-                            <!-- 账单详情 -->
-                            <div class="tab-pane fade" id="details" role="tabpanel">
-                                <!-- 时间范围选择 -->
-                                <div class="row mb-4">
-                                    <div class="col-md-6">
-                                        <div class="input-group">
-                                            <span class="input-group-text">开始日期</span>
-                                            <input type="date" class="form-control" id="startDate">
-                                            <span class="input-group-text">结束日期</span>
-                                            <input type="date" class="form-control" id="endDate">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 账单明细表格 -->
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>计费项</th>
-                                                <th>项目</th>
-                                                <th>规格</th>
-                                                <th>用量</th>
-                                                <th>单价</th>
-                                                <th>金额</th>
-                                                <th>时间</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="billingDetailsList">
-                                            <!-- 账单明细将通过JavaScript动态加载 -->
-                                        </tbody>
-                                    </table>
+                                <h3 class="card-title mb-2">¥4,350.00</h3>
+                                <div class="d-flex align-items-center">
+                                    <span class="badge bg-success me-2">
+                                        <i class="fas fa-arrow-up"></i> 12.5%
+                                    </span>
+                                    <small class="text-muted">较上月</small>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="card-subtitle text-muted">代金券抵扣</h6>
+                                    <i class="fas fa-ticket-alt text-info"></i>
+                                </div>
+                                <h3 class="card-title mb-2">¥200.00</h3>
+                                <div class="d-flex align-items-center">
+                                    <span class="text-info">使用2张</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="card-subtitle text-muted">实付金额</h6>
+                                    <i class="fas fa-check-circle text-success"></i>
+                                </div>
+                                <h3 class="card-title mb-2">¥3,800.00</h3>
+                                <div class="d-flex align-items-center">
+                                    <span class="badge bg-success">已支付</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 费用明细表格 -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="card-title mb-0">费用明细</h5>
+                            <div class="d-flex gap-2">
+                                <div class="input-group" style="width: 200px;">
+                                    <input type="text" class="form-control" placeholder="搜索">
+                                    <button class="btn btn-outline-secondary" type="button">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                                <button class="btn btn-outline-secondary">
+                                    <i class="fas fa-filter me-1"></i>筛选
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>计费项</th>
+                                        <th>项目</th>
+                                        <th>规格</th>
+                                        <th>用量</th>
+                                        <th>单价</th>
+                                        <th>优惠金额</th>
+                                        <th>应付金额</th>
+                                        <th>时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="billingDetailsList">
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-server me-2 text-primary"></i>
+                                                <div>
+                                                    <div>开发机</div>
+                                                    <small class="text-muted">按量付费</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>默认项目</td>
+                                        <td>8核16G</td>
+                                        <td>720小时</td>
+                                        <td>￥1.5/小时</td>
+                                        <td class="text-success">-￥180.00</td>
+                                        <td>￥900.00</td>
+                                        <td>2024-03-01</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-link">详情</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-hdd me-2 text-info"></i>
+                                                <div>
+                                                    <div>共享存储</div>
+                                                    <small class="text-muted">包年包月</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>默认项目</td>
+                                        <td>500GB</td>
+                                        <td>1个月</td>
+                                        <td>￥300/月</td>
+                                        <td class="text-success">-￥30.00</td>
+                                        <td>￥270.00</td>
+                                        <td>2024-03-01</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-link">详情</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- 分页器 -->
+                        <nav class="mt-4">
+                            <ul class="pagination justify-content-end">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">上一页</a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">下一页</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

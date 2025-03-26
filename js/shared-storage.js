@@ -79,7 +79,7 @@ function loadStorageData() {
         {
             name: 'shared-storage-1',
             description: '用于数据共享的存储卷',
-            project: '项目一',
+            project: '默认项目',
             capacity: '100 GB',
             used: 45,
             mountPath: '/mnt/shared',
@@ -88,7 +88,7 @@ function loadStorageData() {
         {
             name: 'shared-storage-2',
             description: '模型训练数据存储',
-            project: '项目二',
+            project: '默认项目',
             capacity: '200 GB',
             used: 60,
             mountPath: '/mnt/training',
@@ -97,7 +97,7 @@ function loadStorageData() {
         {
             name: 'shared-storage-3',
             description: '开发环境共享存储',
-            project: '项目一',
+            project: '默认项目',
             capacity: '50 GB',
             used: 30,
             mountPath: '/mnt/dev',

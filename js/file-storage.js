@@ -60,7 +60,7 @@ function loadStorageData() {
         {
             name: 'file-storage-1',
             description: '项目文件存储',
-            project: '项目一',
+            project: '默认项目',
             capacity: '50 GB',
             used: 30,
             accessPath: '/data/files',
@@ -70,7 +70,7 @@ function loadStorageData() {
         {
             name: 'file-storage-2',
             description: '数据备份存储',
-            project: '项目二',
+            project: '默认项目',
             capacity: '100 GB',
             used: 25,
             accessPath: '/data/backup',
