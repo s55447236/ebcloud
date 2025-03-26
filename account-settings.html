@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>账号设置 - 英博云平台</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 侧边栏容器 -->
+        <div id="sidebar-container"></div>
+        
+        <!-- 主要内容区 -->
+        <div class="main-content account-settings-page">
+            <div class="container-fluid py-4">
+                <!-- 页面标题 -->
+                <div class="mb-4">
+                    <h2 class="mb-1">账号设置</h2>
+                    <p class="text-muted">管理您的个人信息和账号安全</p>
+                </div>
+
+                <!-- 设置选项卡 -->
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile" type="button">
+                                    <i class="fas fa-user me-2"></i>个人信息
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#security" type="button">
+                                    <i class="fas fa-shield-alt me-2"></i>安全设置
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#notifications" type="button">
+                                    <i class="fas fa-bell me-2"></i>通知设置
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content mt-4">
+                            <!-- 个人信息 -->
+                            <div class="tab-pane fade show active" id="profile">
+                                <form id="profileForm">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-4">
+                                                <label class="form-label">用户名</label>
+                                                <input type="text" class="form-control" value="John Doe" disabled>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="form-label">邮箱地址</label>
+                                                <input type="email" class="form-control" value="john.doe@example.com">
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="form-label">手机号码</label>
+                                                <input type="tel" class="form-control" value="13800138000">
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="form-label">所属部门</label>
+                                                <input type="text" class="form-control" value="研发部">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">
+                                                保存更改
+                                            </button>
+                                        </div>
+                                        <div class="col-md-4 offset-md-2">
+                                            <div class="text-center">
+                                                <div class="avatar-upload mb-3">
+                                                    <div class="avatar-preview">
+                                                        <div class="avatar-large">JD</div>
+                                                    </div>
+                                                    <div class="mt-3">
+                                                        <button type="button" class="btn btn-outline-primary btn-sm">
+                                                            <i class="fas fa-upload me-2"></i>上传头像
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <p class="text-muted small">
+                                                    支持 jpg、png 格式，文件大小不超过 2MB
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- 安全设置 -->
+                            <div class="tab-pane fade" id="security">
+                                <div class="security-items">
+                                    <!-- 修改密码 -->
+                                    <div class="security-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h5>登录密码</h5>
+                                                <p class="text-muted mb-0">定期更改密码可以提高账号安全性</p>
+                                            </div>
+                                            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                                                修改密码
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- 两步验证 -->
+                                    <div class="security-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h5>两步验证</h5>
+                                                <p class="text-muted mb-0">启用两步验证后，登录时需要输入额外的验证码</p>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="twoFactorAuth">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 登录设备 -->
+                                    <div class="security-item">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <div>
+                                                <h5>登录设备</h5>
+                                                <p class="text-muted mb-0">查看并管理当前登录的设备</p>
+                                            </div>
+                                        </div>
+                                        <div class="device-list">
+                                            <div class="device-item">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-laptop me-3"></i>
+                                                    <div>
+                                                        <div>MacBook Pro</div>
+                                                        <small class="text-muted">上海市 - 最后登录于 2024-03-20 15:30</small>
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-outline-danger btn-sm">
+                                                    <i class="fas fa-sign-out-alt"></i>
+                                                    退出登录
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 通知设置 -->
+                            <div class="tab-pane fade" id="notifications">
+                                <div class="notification-settings">
+                                    <h5 class="mb-4">通知方式</h5>
+                                    <div class="notification-group mb-4">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="emailNotification" checked>
+                                            <label class="form-check-label" for="emailNotification">
+                                                邮件通知
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="smsNotification" checked>
+                                            <label class="form-check-label" for="smsNotification">
+                                                短信通知
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <h5 class="mb-4">通知类型</h5>
+                                    <div class="notification-group">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="securityNotification" checked>
+                                            <label class="form-check-label" for="securityNotification">
+                                                安全提醒
+                                                <small class="text-muted d-block">账号安全相关的通知</small>
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="activityNotification" checked>
+                                            <label class="form-check-label" for="activityNotification">
+                                                活动提醒
+                                                <small class="text-muted d-block">系统活动和更新提醒</small>
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="marketingNotification">
+                                            <label class="form-check-label" for="marketingNotification">
+                                                营销信息
+                                                <small class="text-muted d-block">产品促销和活动信息</small>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改密码模态框 -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">修改密码</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="changePasswordForm">
+                        <div class="mb-3">
+                            <label class="form-label">当前密码</label>
+                            <input type="password" class="form-control" name="currentPassword">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">新密码</label>
+                            <input type="password" class="form-control" name="newPassword">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">确认新密码</label>
+                            <input type="password" class="form-control" name="confirmPassword">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="changePasswordBtn">确认修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/account-settings.js"></script>
+</body>
+</html> 

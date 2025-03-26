@@ -1,0 +1,458 @@
+.storage-page {
+    padding: 20px;
+}
+
+/* 页面标题 */
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.page-description {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* 项目选择器 */
+.project-selector {
+    min-width: 200px;
+}
+
+/* 概览卡片 */
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-subtitle {
+    font-size: 14px;
+    color: #666;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin: 10px 0;
+}
+
+/* 进度条样式 */
+.progress {
+    background-color: #e9ecef;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    transition: width 0.3s ease;
+}
+
+/* 存储类型切换 */
+.nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 20px;
+}
+
+.nav-tabs .nav-link {
+    color: #495057;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 12px 20px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: transparent;
+    color: #228be6;
+}
+
+.nav-tabs .nav-link.active {
+    color: #228be6;
+    border-bottom-color: #228be6;
+    background: transparent;
+}
+
+/* 表格样式 */
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+    background-color: #f8f9fa;
+}
+
+.table td {
+    vertical-align: middle;
+    color: #495057;
+}
+
+/* 存储图标 */
+.fa-hdd {
+    font-size: 1.2em;
+}
+
+.fa-folder {
+    font-size: 1.2em;
+}
+
+/* 徽章样式 */
+.badge {
+    padding: 6px 10px;
+    font-weight: 500;
+    border-radius: 4px;
+}
+
+.badge.bg-info {
+    background-color: #e7f5ff !important;
+    color: #1971c2;
+}
+
+.badge.bg-success {
+    background-color: #d3f9d8 !important;
+    color: #2b8a3e;
+}
+
+/* 操作按钮 */
+.btn-group .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    border-radius: 0.2rem;
+}
+
+.btn-group .btn:hover {
+    background-color: #f8f9fa;
+}
+
+.btn-group .btn i {
+    font-size: 0.875rem;
+}
+
+/* 创建按钮 */
+.btn-primary {
+    background-color: #228be6;
+    border-color: #228be6;
+}
+
+.btn-primary:hover {
+    background-color: #1971c2;
+    border-color: #1971c2;
+}
+
+/* 模态框样式 */
+.modal-header {
+    background: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.form-control:focus {
+    border-color: #228be6;
+    box-shadow: 0 0 0 2px rgba(34,139,230,0.1);
+}
+
+/* 存储用量显示 */
+.storage-usage {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.storage-usage .progress {
+    flex-grow: 1;
+}
+
+.storage-usage .percentage {
+    min-width: 45px;
+    text-align: right;
+    color: #666;
+}
+
+/* Toast 样式 */
+.toast {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.toast-body {
+    font-size: 14px;
+    padding: 12px 15px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 15px;
+    }
+    
+    .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .nav-tabs .nav-link {
+        white-space: nowrap;
+    }
+    
+    .table-responsive {
+        margin: 0 -15px;
+    }
+    
+    .btn-group {
+        flex-wrap: wrap;
+    }
+    
+    .btn-group .btn {
+        margin: 2px;
+    }
+}
+
+/* 应用容器 */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* 侧边栏样式 */
+.sidebar {
+    width: 260px;
+    background-color: #fff;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.sidebar-logo {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.logo-img {
+    width: 32px;
+    height: 32px;
+    margin-right: 0.75rem;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.sidebar-menu {
+    flex: 1;
+    padding: 1rem 0;
+    overflow-y: auto;
+}
+
+.menu-section {
+    margin-bottom: 1.5rem;
+}
+
+.menu-title {
+    padding: 0.5rem 1.5rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.menu-items {
+    padding: 0.5rem 0;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    color: #374151;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.menu-item:hover {
+    background-color: #f3f4f6;
+    color: #1d4ed8;
+}
+
+.menu-item.active {
+    background-color: #e0e7ff;
+    color: #1d4ed8;
+}
+
+.menu-item i {
+    width: 1.5rem;
+    margin-right: 0.75rem;
+    font-size: 1.125rem;
+}
+
+.sidebar-user {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 0.75rem;
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-info {
+    flex: 1;
+}
+
+.user-name {
+    font-weight: 500;
+    color: #111827;
+}
+
+.user-role {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* 主要内容区 */
+.main-content {
+    flex: 1;
+    margin-left: 260px;
+    background-color: #f9fafb;
+    min-height: 100vh;
+}
+
+/* 卡片样式 */
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    color: #111827;
+}
+
+/* 表格样式 */
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    font-weight: 500;
+    color: #6b7280;
+    border-bottom-width: 1px;
+}
+
+.table td {
+    vertical-align: middle;
+    color: #374151;
+}
+
+/* 进度条样式 */
+.progress {
+    background-color: #e5e7eb;
+    border-radius: 9999px;
+}
+
+.progress-bar {
+    border-radius: 9999px;
+}
+
+/* 按钮组样式 */
+.btn-group .btn {
+    padding: 0.25rem 0.5rem;
+}
+
+.btn-group .btn i {
+    font-size: 0.875rem;
+}
+
+/* 模态框样式 */
+.modal-content {
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.modal-header {
+    border-bottom-color: #e5e7eb;
+}
+
+.modal-footer {
+    border-top-color: #e5e7eb;
+}
+
+/* Toast 提示样式 */
+.toast {
+    background-color: rgba(0, 0, 0, 0.85);
+    border: none;
+}
+
+.toast-body {
+    color: #fff;
+}
+
+/* 项目选择器样式 */
+.project-selector .form-select {
+    min-width: 160px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+} 
