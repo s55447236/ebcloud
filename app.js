@@ -14,7 +14,10 @@ const routes = {
     '/vouchers': 'vouchers.html',
     '/access-control': 'access-control.html',
     '/contact': 'contact.html',
-    '/faq': 'faq.html'
+    '/faq': 'faq.html',
+    '/tasks': 'tasks.html',
+    '/storage': 'storage.html',
+    '/settings': 'settings.html'
 };
 
 // 当前活动的页面路径
@@ -158,14 +161,14 @@ async function handleRoute(path) {
                     document.body.appendChild(modal.cloneNode(true));
                 });
                 
-                // 根据路径加载对应的JS文件
+                // 先加载页面特定的JS文件
                 await loadPageScript(path);
                 
-                // 重新初始化页面特定的JavaScript
-                initializePageScripts(path);
-                
-                // 重新初始化Bootstrap组件
+                // 初始化Bootstrap组件
                 initializeBootstrapComponents();
+                
+                // 初始化模态框
+                initializeModals();
             }
         }
     } catch (error) {
@@ -182,6 +185,9 @@ async function loadPageScript(path) {
     // 根据路径确定要加载的脚本
     let scriptPath = '';
     switch (path) {
+        case '/cluster':
+            scriptPath = 'js/cluster.js';
+            break;
         case '/shared-storage':
             scriptPath = 'js/shared-storage.js';
             break;
@@ -202,7 +208,11 @@ async function loadPageScript(path) {
             const script = document.createElement('script');
             script.src = scriptPath;
             script.setAttribute('data-page-script', 'true');
-            script.onload = resolve;
+            script.onload = () => {
+                // 脚本加载完成后初始化页面
+                initializePageScripts(path);
+                resolve();
+            };
             script.onerror = reject;
             document.body.appendChild(script);
         });

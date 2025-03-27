@@ -1,5 +1,5 @@
 // 初始化页面
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // 初始化所有工具提示
     var tooltips = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     tooltips.map(function (tooltip) {
@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // 处理版本展开/收起的图标旋转
-    document.querySelectorAll('.toggle-versions').forEach(function(btn) {
-        btn.addEventListener('click', function() {
+    document.querySelectorAll('.toggle-versions').forEach(function (btn) {
+        btn.addEventListener('click', function () {
             const icon = this.querySelector('i');
             const expanded = this.getAttribute('aria-expanded') === 'true';
-            
+
             // 更新图标旋转状态
             if (expanded) {
                 icon.style.transform = 'rotate(0deg)';
@@ -23,20 +23,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 处理镜像搜索
     const searchInputs = document.querySelectorAll('input[placeholder="搜索镜像..."]');
-    searchInputs.forEach(function(input) {
-        input.addEventListener('input', debounce(function(e) {
+    searchInputs.forEach(function (input) {
+        input.addEventListener('input', debounce(function (e) {
             const searchTerm = e.target.value.toLowerCase();
             const tableBody = e.target.closest('.card-body').querySelector('tbody');
-            
+
             // 遍历所有父行（主镜像行）
             const parentRows = tableBody.querySelectorAll('.parent-row');
-            parentRows.forEach(function(row) {
+            parentRows.forEach(function (row) {
                 const imageName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
                 const shouldShow = imageName.includes(searchTerm);
-                
+
                 // 获取关联的版本行
                 const versionRow = row.nextElementSibling;
-                
+
                 if (shouldShow) {
                     row.style.display = '';
                     if (versionRow && versionRow.classList.contains('version-row')) {
@@ -54,13 +54,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 初始化项目选择器
     initProjectSelector();
-    
+
     // 初始化镜像来源切换
     initImageSourceSwitch();
-    
+
     // 初始化镜像类型切换
     initImageTypeTabs();
-    
+
     // 加载镜像数据
     loadImageData();
 });
@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', function() {
 function initProjectSelector() {
     const projectSelector = document.getElementById('projectSelector');
     if (!projectSelector) return;
-    
-    projectSelector.addEventListener('change', function() {
+
+    projectSelector.addEventListener('change', function () {
         const selectedProject = this.value;
         filterImagesByProject(selectedProject);
     });
@@ -79,16 +79,16 @@ function initProjectSelector() {
 // 根据项目筛选镜像列表
 function filterImagesByProject(projectId) {
     const rows = document.querySelectorAll('#imageList tr');
-    
+
     rows.forEach(row => {
         if (projectId === 'all') {
             row.style.display = '';
             return;
         }
-        
+
         const projectCell = row.querySelector('td:nth-child(2)');
         if (!projectCell) return;
-        
+
         const rowProjectId = projectCell.textContent.trim();
         const shouldShow = projectId === 'all' || rowProjectId === projectId;
         row.style.display = shouldShow ? '' : 'none';
@@ -99,12 +99,12 @@ function filterImagesByProject(projectId) {
 function initImageSourceSwitch() {
     const sourceSelect = document.getElementById('imageSource');
     if (!sourceSelect) return;
-    
+
     const dockerhubImport = document.getElementById('dockerhubImport');
     const harborImport = document.getElementById('harborImport');
     const fileImport = document.getElementById('fileImport');
-    
-    sourceSelect.addEventListener('change', function(e) {
+
+    sourceSelect.addEventListener('change', function (e) {
         const source = e.target.value;
         document.getElementById('dockerhubImport').style.display = source === 'dockerhub' ? 'block' : 'none';
         document.getElementById('harborImport').style.display = source === 'harbor' ? 'block' : 'none';
@@ -116,7 +116,7 @@ function initImageSourceSwitch() {
 function initImageTypeTabs() {
     const tabs = document.querySelectorAll('#imageTypeTabs .nav-link');
     tabs.forEach(tab => {
-        tab.addEventListener('shown.bs.tab', function(e) {
+        tab.addEventListener('shown.bs.tab', function (e) {
             // 切换标签页时重新加载对应类型的镜像数据
             const type = e.target.id === 'preset-tab' ? 'preset' : 'custom';
             loadImageData(type);
@@ -159,7 +159,7 @@ function loadImageData(type = 'preset') {
 
     // 更新镜像列表
     updateImageList(mockData);
-    
+
     // 更新统计数据
     updateImageStats(mockData);
 }
@@ -170,7 +170,7 @@ function updateImageList(images) {
     if (!tbody) return;
 
     tbody.innerHTML = '';
-    
+
     images.forEach(image => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -205,10 +205,10 @@ function updateImageList(images) {
                 </div>
             </td>
         `;
-        
+
         tbody.appendChild(tr);
     });
-    
+
     // 重新初始化工具提示
     const tooltips = [].slice.call(tbody.querySelectorAll('[data-bs-toggle="tooltip"]'));
     tooltips.map(el => new bootstrap.Tooltip(el));
@@ -219,7 +219,7 @@ function updateImageStats(images) {
     const totalSize = images.reduce((acc, img) => acc + parseFloat(img.size), 0);
     const privateCount = images.length;
     const publicCount = 0; // 示例数据中没有公开镜像
-    
+
     // 更新显示
     document.querySelector('.card:nth-child(1) .card-title').textContent = `${images.length} 个`;
     document.querySelector('.card:nth-child(2) .card-title').textContent = `${totalSize.toFixed(1)} GB`;
@@ -238,17 +238,17 @@ function createImage() {
 
     // TODO: 发送创建镜像请求到后端
     console.log('创建镜像:', imageData);
-    
+
     // 关闭模态框
     const modal = bootstrap.Modal.getInstance(document.getElementById('createImageModal'));
     modal.hide();
-    
+
     // 显示成功提示
     showToast('镜像创建成功');
-    
+
     // 重置表单
     form.reset();
-    
+
     // 重新加载镜像列表
     loadImageData();
 }
@@ -277,13 +277,13 @@ function showToast(message, type = 'success') {
     toastContainer.style.top = '20px';
     toastContainer.style.right = '20px';
     toastContainer.style.zIndex = '9999';
-    
+
     const toastEl = document.createElement('div');
     toastEl.className = `toast align-items-center text-white bg-${type}`;
     toastEl.setAttribute('role', 'alert');
     toastEl.setAttribute('aria-live', 'assertive');
     toastEl.setAttribute('aria-atomic', 'true');
-    
+
     toastEl.innerHTML = `
         <div class="d-flex">
             <div class="toast-body">
@@ -292,18 +292,18 @@ function showToast(message, type = 'success') {
             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
         </div>
     `;
-    
+
     toastContainer.appendChild(toastEl);
     document.body.appendChild(toastContainer);
-    
+
     const toast = new bootstrap.Toast(toastEl, {
         autohide: true,
         delay: 3000
     });
-    
+
     toast.show();
-    
-    toastEl.addEventListener('hidden.bs.toast', function() {
+
+    toastEl.addEventListener('hidden.bs.toast', function () {
         document.body.removeChild(toastContainer);
     });
 }
