@@ -6,7 +6,7 @@ const routes = {
     '/block-storage': 'block-storage.html',
     '/shared-storage': 'shared-storage.html',
     '/file-storage': 'file-storage.html',
-    '/dev-machine': 'dev-machine.html',
+    '/dev-machines': 'dev-machines.html',
     '/images': 'images.html',
     '/account-settings': 'account-settings.html',
     '/billing-overview': 'billing-overview.html',
@@ -191,6 +191,9 @@ async function loadPageScript(path) {
         case '/billing-overview':
             scriptPath = 'js/billing-overview.js';
             break;
+        case '/dev-machines':
+            scriptPath = 'js/dev-machines.js';
+            break;
         // 可以添加更多页面的脚本
     }
 
@@ -250,8 +253,18 @@ function initializePageScripts(path) {
                 initFileStorage();
             }
             break;
+        case '/dev-machines':
+            if (typeof initDevMachines === 'function') {
+                initDevMachines();
+            }
+            // 确保初始化模态框
+            initializeModals();
+            break;
         // 可以添加更多页面的初始化
     }
+
+    // 初始化Bootstrap组件
+    initializeBootstrapComponents();
 }
 
 // 初始化Bootstrap组件
@@ -280,7 +293,13 @@ function initializeModals() {
             const modalElement = document.querySelector(targetId);
             if (modalElement) {
                 // 初始化Bootstrap模态框
-                new bootstrap.Modal(modalElement);
+                const modal = new bootstrap.Modal(modalElement);
+                
+                // 为触发器添加点击事件
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    modal.show();
+                });
             }
         }
     });

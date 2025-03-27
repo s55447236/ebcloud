@@ -1,16 +1,59 @@
 // 初始化页面
 document.addEventListener('DOMContentLoaded', function() {
-    // 初始化工具提示
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
+    // 初始化所有工具提示
+    var tooltips = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    tooltips.map(function (tooltip) {
+        return new bootstrap.Tooltip(tooltip)
+    });
+
+    // 处理版本展开/收起的图标旋转
+    document.querySelectorAll('.toggle-versions').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            const expanded = this.getAttribute('aria-expanded') === 'true';
+            
+            // 更新图标旋转状态
+            if (expanded) {
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                icon.style.transform = 'rotate(90deg)';
+            }
+        });
+    });
+
+    // 处理镜像搜索
+    const searchInputs = document.querySelectorAll('input[placeholder="搜索镜像..."]');
+    searchInputs.forEach(function(input) {
+        input.addEventListener('input', debounce(function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const tableBody = e.target.closest('.card-body').querySelector('tbody');
+            
+            // 遍历所有父行（主镜像行）
+            const parentRows = tableBody.querySelectorAll('.parent-row');
+            parentRows.forEach(function(row) {
+                const imageName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                const shouldShow = imageName.includes(searchTerm);
+                
+                // 获取关联的版本行
+                const versionRow = row.nextElementSibling;
+                
+                if (shouldShow) {
+                    row.style.display = '';
+                    if (versionRow && versionRow.classList.contains('version-row')) {
+                        versionRow.style.display = '';
+                    }
+                } else {
+                    row.style.display = 'none';
+                    if (versionRow && versionRow.classList.contains('version-row')) {
+                        versionRow.style.display = 'none';
+                    }
+                }
+            });
+        }, 300));
     });
 
     // 初始化项目选择器
     initProjectSelector();
-    
-    // 初始化搜索功能
-    initSearch();
     
     // 初始化镜像来源切换
     initImageSourceSwitch();
@@ -52,34 +95,6 @@ function filterImagesByProject(projectId) {
     });
 }
 
-// 初始化搜索功能
-function initSearch() {
-    const searchInput = document.querySelector('.search-box input');
-    if (!searchInput) return;
-    
-    searchInput.addEventListener('input', debounce(function() {
-        const searchTerm = this.value.toLowerCase();
-        searchImages(searchTerm);
-    }, 300));
-}
-
-// 搜索镜像
-function searchImages(term) {
-    const rows = document.querySelectorAll('#imageList tr');
-    
-    rows.forEach(row => {
-        const imageName = row.querySelector('td:first-child').textContent.toLowerCase();
-        const description = row.querySelector('td:first-child small')?.textContent.toLowerCase() || '';
-        const tags = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
-        
-        const isMatch = imageName.includes(term) || 
-                       description.includes(term) || 
-                       tags.includes(term);
-        
-        row.style.display = isMatch ? '' : 'none';
-    });
-}
-
 // 初始化镜像来源切换
 function initImageSourceSwitch() {
     const sourceSelect = document.getElementById('imageSource');
@@ -89,24 +104,11 @@ function initImageSourceSwitch() {
     const harborImport = document.getElementById('harborImport');
     const fileImport = document.getElementById('fileImport');
     
-    sourceSelect.addEventListener('change', function() {
-        // 隐藏所有导入选项
-        dockerhubImport.style.display = 'none';
-        harborImport.style.display = 'none';
-        fileImport.style.display = 'none';
-        
-        // 显示选中的导入选项
-        switch(this.value) {
-            case 'dockerhub':
-                dockerhubImport.style.display = 'block';
-                break;
-            case 'harbor':
-                harborImport.style.display = 'block';
-                break;
-            case 'file':
-                fileImport.style.display = 'block';
-                break;
-        }
+    sourceSelect.addEventListener('change', function(e) {
+        const source = e.target.value;
+        document.getElementById('dockerhubImport').style.display = source === 'dockerhub' ? 'block' : 'none';
+        document.getElementById('harborImport').style.display = source === 'harbor' ? 'block' : 'none';
+        document.getElementById('fileImport').style.display = source === 'file' ? 'block' : 'none';
     });
 }
 
@@ -306,13 +308,13 @@ function showToast(message, type = 'success') {
     });
 }
 
-// 工具函数：防抖
+// 防抖函数
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
         const later = () => {
             clearTimeout(timeout);
-            func.apply(this, args);
+            func(...args);
         };
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
