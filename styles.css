@@ -4,7 +4,7 @@
     --success-color: #198754;
     --warning-color: #ffc107;
     --danger-color: #dc3545;
-    --light-bg: #f8f9fa;
+    --light-bg: #FFFFFF;
     --dark-bg: #212529;
     --border-color: #e9ecef;
     --text-primary: #2c3e50;
@@ -46,14 +46,13 @@ body {
 /* 侧边栏样式 */
 .sidebar {
     width: var(--sidebar-width);
-    background-color: white;
+    background-color: F4F4F5;
     border-right: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
     position: fixed;
     height: 100vh;
     transition: width var(--transition-speed);
-    box-shadow: 2px 0 8px rgba(0,0,0,0.05);
 }
 
 .logo {
